@@ -15,6 +15,7 @@ def main(debug=False):
         sys.exit(-1)
 
     images = list(os.listdir(IN_DIR))
+    images.sort()
 
     if len(images) == 0:
         exit(1)
