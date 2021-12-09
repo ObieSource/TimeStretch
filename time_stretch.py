@@ -41,12 +41,12 @@ def main(debug=False):
 
     if debug:
         print('Populating frames')
-    for x, image_name in enumerate(images): # for each column in the output
+    for x, image_name in enumerate(images):  # for each column in the output
         if debug:
             print(f'  Reading input frame {x}')
 
         input_frame = Image.open(f'{IN_DIR}/{image_name}')
-        for frame_num, output_frame in enumerate(output_images): # fill that column in each frame
+        for frame_num, output_frame in enumerate(output_images):  # fill that column in each frame
             cropped_image = input_frame.crop((frame_num, 0, frame_num + 1, output_height))
             output_frame.paste(cropped_image, (x, 0))
 
