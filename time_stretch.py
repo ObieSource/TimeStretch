@@ -46,16 +46,13 @@ def main(debug=False):
             cropped_image = input_frame.crop((frame_num, 0, frame_num + 1, output_height))
             output_frame.paste(cropped_image, (x, 0))
 
-    car = Image.open('data/0001.png')
-    output_images[0].paste(car, (0, 0))
-
     if debug:
         print('Saving frames')
     if not os.path.isdir(OUT_DIR):
         os.mkdir(OUT_DIR)
     for output_frame, output_image in enumerate(output_images):
         if debug:
-            print(f'  frame={output_frame+1}/{frame_count}')
+            print(f'  frame={output_frame + 1}/{frame_count}')
         output_image.save(f'{OUT_DIR}/{output_frame}.{EXT}')
 
 
