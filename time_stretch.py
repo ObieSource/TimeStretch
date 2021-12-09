@@ -2,7 +2,7 @@
 # Inspired by @matthen2 https://twitter.com/matthen2/status/1466780290710482947
 
 from PIL import Image
-import os
+import os, sys
 
 IN_DIR = 'data'
 OUT_DIR = f'{IN_DIR}_output'
@@ -10,6 +10,10 @@ EXT = 'png'
 
 
 def main(debug=False):
+    if not os.path.isdir(IN_DIR):
+        print(f'{IN_DIR} is not a directory.')
+        sys.exit(-1)
+
     images = list(os.listdir(IN_DIR))
 
     if len(images) == 0:
