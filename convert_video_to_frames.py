@@ -1,10 +1,8 @@
 import os
-import shutil
 
 def convert_video_to_frames(input_path, output_path, fps=None):
     if os.path.exists(output_path):
-        print(f'Deleting directory {output_path}')
-        shutil.rmtree(output_path)
+        raise FileExistsError(f'Directory {output_path} already exists. Please delete it before continuing.')
     print(f'Creating directory {output_path}')
     os.makedirs(output_path)
 

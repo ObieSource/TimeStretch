@@ -3,12 +3,13 @@
 
 from PIL import Image
 import os, sys
-import shutil
 
 def time_stretch(input_path, output_path, extension, debug=False):
     if not os.path.isdir(input_path):
         print(f'{input_path} is not a directory.')
         sys.exit(-1)
+    if os.path.exists(output_path):
+        raise FileExistsError(f'Directory {output_path} already exists. Please delete it before continuing.')
 
     images = list(os.listdir(input_path))
     images.sort()
@@ -49,10 +50,6 @@ def time_stretch(input_path, output_path, extension, debug=False):
 
     if debug:
         print('Saving frames')
-    if os.path.exists(output_path):
-        print(f'Deleting directory {output_path}')
-        shutil.rmtree(output_path)
-    if debug:
         print(f'Creating directory {output_path}')
     os.makedirs(output_path)
     for output_frame, output_image in enumerate(output_images):
