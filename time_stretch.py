@@ -52,7 +52,8 @@ def time_stretch(input_path, output_path, extension, debug=False):
     if os.path.exists(output_path):
         print(f'Deleting directory {output_path}')
         shutil.rmtree(output_path)
-    print(f'Creating directory {output_path}')
+    if debug:
+        print(f'Creating directory {output_path}')
     os.makedirs(output_path)
     for output_frame, output_image in enumerate(output_images):
         if debug:
