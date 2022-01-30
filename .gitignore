@@ -1,1 +1,3 @@
-*_output/*
+*_output*
+*_input*
+*.pyc

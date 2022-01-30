@@ -4,17 +4,14 @@
 from PIL import Image
 import os, sys
 
-IN_DIR = 'data'
-OUT_DIR = f'{IN_DIR}_output'
-EXT = 'png'
-
-
-def main(debug=False):
-    if not os.path.isdir(IN_DIR):
-        print(f'{IN_DIR} is not a directory.')
+def time_stretch(input_path, output_path, extension, debug=False):
+    if not os.path.isdir(input_path):
+        print(f'{input_path} is not a directory.')
         sys.exit(-1)
+    if os.path.exists(output_path):
+        raise FileExistsError(f'Directory {output_path} already exists. Please delete it before continuing.')
 
-    images = list(os.listdir(IN_DIR))
+    images = list(os.listdir(input_path))
     images.sort()
 
     if len(images) == 0:
@@ -22,7 +19,7 @@ def main(debug=False):
 
     # Establish dimension measurements of the output
     output_width = len(images)
-    first_image = Image.open(f'{IN_DIR}/{images[0]}')
+    first_image = Image.open(f'{input_path}/{images[0]}')
     output_height = first_image.height
     frame_count = first_image.width
 
@@ -46,20 +43,17 @@ def main(debug=False):
         if debug:
             print(f'  Reading input frame {x}')
 
-        input_frame = Image.open(f'{IN_DIR}/{image_name}')
+        input_frame = Image.open(f'{input_path}/{image_name}')
         for frame_num, output_frame in enumerate(output_images):  # fill that column in each frame
             cropped_image = input_frame.crop((frame_num, 0, frame_num + 1, output_height))
             output_frame.paste(cropped_image, (x, 0))
 
     if debug:
         print('Saving frames')
-    if not os.path.isdir(OUT_DIR):
-        os.mkdir(OUT_DIR)
+        print(f'Creating directory {output_path}')
+    os.makedirs(output_path)
     for output_frame, output_image in enumerate(output_images):
         if debug:
             print(f'  frame={output_frame + 1}/{frame_count}')
-        output_image.save(f'{OUT_DIR}/{output_frame}.{EXT}')
+        output_image.save(f'{output_path}/{output_frame:09}.{extension}')
 
-
-if __name__ == '__main__':
-    main()
